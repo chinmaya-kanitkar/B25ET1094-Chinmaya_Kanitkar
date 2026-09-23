@@ -1,0 +1,43 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class String
+{
+    string str;
+
+public:
+    // Constructor
+    String()
+    {
+        cout << "Constructor called." << endl;
+
+        cout << "Enter a sentence: ";
+        getline(cin, str);
+    }
+
+    // Function to display the string
+    void display()
+    {
+        cout << "Entered sentence: " << str << endl;
+    }
+
+    // Destructor
+    ~String()
+    {
+        cout << "Destructor called. Object destroyed." << endl;
+    }
+};
+
+int main()
+{
+    cout << "Creating object..." << endl;
+
+    String s1;       // Object creation
+
+    s1.display();
+
+    cout << "End of main function." << endl;
+
+    return 0;
+}
