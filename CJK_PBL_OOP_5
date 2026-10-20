@@ -1,50 +1,67 @@
 #include <iostream>
+#include <string>
 using namespace std;
 
-class ArrayCalculator {
+// Base class 1: Basic Employee Details
+class EmployeeInfo {
+protected:
+    int empId;
+    string name;
+    double basicSalary;
+
 public:
-    int sum(int arr[], int n) {
-        int total = 0;
-        for (int i = 0; i < n; i++) {
-            total = total + arr[i];
-        }
-        return total;
+    void getBasicDetails() {
+        cout << "Enter Employee ID: ";
+        cin >> empId;
+        cin.ignore();
+        cout << "Enter Employee Name: ";
+        getline(cin, name);
+        cout << "Enter Basic Salary: ";
+        cin >> basicSalary;
+    }
+};
+
+// Base class 2: Sales & Incentive Information
+class IncentiveInfo {
+protected:
+    double totalSales;
+    double incentiveRate; // In percentage
+
+public:
+    void getSalesDetails() {
+        cout << "Enter Total Monthly Sales: ";
+        cin >> totalSales;
+        cout << "Enter Incentive Rate (%): ";
+        cin >> incentiveRate;
+    }
+};
+
+// Derived Class using Multiple Inheritance
+class EmployeePayroll : public EmployeeInfo, public IncentiveInfo {
+public:
+    double calculateIncentive() {
+        return (totalSales * incentiveRate) / 100.0;
     }
 
-    float sum(float arr[], int n) {
-        float total = 0;
-        for (int i = 0; i < n; i++) {
-            total = total + arr[i];
-        }
-        return total;
+    void displaySalarySlip() {
+        double monthlyIncentive = calculateIncentive();
+        double totalSalary = basicSalary + monthlyIncentive;
+
+        cout << "\n--- Employee Salary Slip ---" << endl;
+        cout << "Employee ID: " << empId << endl;
+        cout << "Employee Name: " << name << endl;
+        cout << "Basic Salary: $" << basicSalary << endl;
+        cout << "Total Sales: $" << totalSales << endl;
+        cout << "Calculated Monthly Incentive: $" << monthlyIncentive << endl;
+        cout << "Total Monthly Salary: $" << totalSalary << endl;
     }
 };
 
 int main() {
-    ArrayCalculator calc;
-   
-    int n1;
-    cout << "Enter the size of the integer array: ";
-    cin >> n1;
-   
-    int intArray[n1];
-    cout << "Enter " << n1 << " integers: " << endl;
-    for (int i = 0; i < n1; i++) {
-        cin >> intArray[i];
-    }
-
-    int n2;
-    cout << "\nEnter the size of the float array: ";
-    cin >> n2;
-   
-    float floatArray[n2];
-    cout << "Enter " << n2 << " floating-point numbers: " << endl;
-    for (int j = 0; j < n2; j++) {
-        cin >> floatArray[j];
-    }
-
-    cout << "\nSum of integer array = " << calc.sum(intArray, n1) << endl;
-    cout << "Sum of floating-point array = " << calc.sum(floatArray, n2) << endl;
+    EmployeePayroll emp;
+    emp.getBasicDetails();
+    emp.getSalesDetails();
+    emp.displaySalarySlip();
 
     return 0;
 }
