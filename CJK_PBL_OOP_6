@@ -2,42 +2,80 @@
 #include <string>
 using namespace std;
 
-class String
-{
-    string str;
+// Base class
+class Insurance {
+protected:
+    string policyNumber;
+    double coverageAmount;
 
 public:
-    // Constructor
-    String()
-    {
-        cout << "Constructor called." << endl;
+    Insurance(string pNum, double amount) : policyNumber(pNum), coverageAmount(amount) {}
 
-        cout << "Enter a sentence: ";
-        getline(cin, str);
+    virtual void calculatePremium() = 0; // Pure virtual function
+    
+    virtual void displayDetails() {
+        cout << "Policy Number: " << policyNumber << endl;
+        cout << "Coverage Amount: $" << coverageAmount << endl;
     }
 
-    // Function to display the string
-    void display()
-    {
-        cout << "Entered sentence: " << str << endl;
+    virtual ~Insurance() {}
+};
+
+// Derived Class 1
+class LifeInsurance : public Insurance {
+private:
+    int age;
+
+public:
+    LifeInsurance(string pNum, double amount, int a) 
+        : Insurance(pNum, amount), age(a) {}
+
+    void calculatePremium() override {
+        double premium = (coverageAmount * 0.02) + (age * 10);
+        cout << "Calculated Life Insurance Annual Premium: $" << premium << endl;
     }
 
-    // Destructor
-    ~String()
-    {
-        cout << "Destructor called. Object destroyed." << endl;
+    void displayDetails() override {
+        cout << "\n--- Life Insurance Policy ---" << endl;
+        Insurance::displayDetails();
+        cout << "Insured Person Age: " << age << endl;
     }
 };
 
-int main()
-{
-    cout << "Creating object..." << endl;
+// Derived Class 2
+class VehicleInsurance : public Insurance {
+private:
+    int vehicleAgeYears;
 
-    String s1;       // Object creation
+public:
+    VehicleInsurance(string pNum, double amount, int vAge) 
+        : Insurance(pNum, amount), vehicleAgeYears(vAge) {}
 
-    s1.display();
+    void calculatePremium() override {
+        double premium = (coverageAmount * 0.05) + (vehicleAgeYears * 50);
+        cout << "Calculated Vehicle Insurance Annual Premium: $" << premium << endl;
+    }
 
-    cout << "End of main function." << endl;
+    void displayDetails() override {
+        cout << "\n--- Vehicle Insurance Policy ---" << endl;
+        Insurance::displayDetails();
+        cout << "Vehicle Age: " << vehicleAgeYears << " years" << endl;
+    }
+};
+
+int main() {
+    // Base class pointers demonstrating runtime polymorphism
+    Insurance* policy1 = new LifeInsurance("LI-10023", 500000.0, 35);
+    Insurance* policy2 = new VehicleInsurance("VI-88901", 30000.0, 4);
+
+    policy1->displayDetails();
+    policy1->calculatePremium();
+
+    policy2->displayDetails();
+    policy2->calculatePremium();
+
+    delete policy1;
+    delete policy2;
 
     return 0;
 }
