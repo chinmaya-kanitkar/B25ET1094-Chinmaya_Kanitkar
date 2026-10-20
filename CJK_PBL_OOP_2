@@ -1,10 +1,28 @@
 #include <iostream>
+#include <string>
 using namespace std;
+
+class Student {
+public:
+    // Display student details without marks
+    void student(int id, string name) {
+        cout << "ID: " << id << " | Name: " << name << endl;
+    }
+
+    // Overloaded function: Display student details with marks
+    void student(int id, string name, float marks) {
+        cout << "ID: " << id << " | Name: " << name << " | Marks: " << marks << endl;
+    }
+};
+
 int main() {
-int sum = 0;
-for (int i = 2; i <= 50; i += 2) {
-sum += i;
-}
-cout << "The sum of even numbers from 1 to 50 is: " << sum << endl;
-return 0;
+    Student s;
+    
+    cout << "--- Student Details Without Marks ---" << endl;
+    s.student(101, "Alice");
+
+    cout << "\n--- Student Details With Marks ---" << endl;
+    s.student(102, "Bob", 88.5f);
+
+    return 0;
 }
