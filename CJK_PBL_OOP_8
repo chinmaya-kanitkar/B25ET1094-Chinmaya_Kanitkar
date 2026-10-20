@@ -1,0 +1,67 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+// Base class 1: Basic Employee Details
+class EmployeeInfo {
+protected:
+    int empId;
+    string name;
+    double basicSalary;
+
+public:
+    void getBasicDetails() {
+        cout << "Enter Employee ID: ";
+        cin >> empId;
+        cin.ignore();
+        cout << "Enter Employee Name: ";
+        getline(cin, name);
+        cout << "Enter Basic Salary: ";
+        cin >> basicSalary;
+    }
+};
+
+// Base class 2: Sales & Incentive Details
+class IncentiveInfo {
+protected:
+    double totalSales;
+    double incentiveRate; // In percentage
+
+public:
+    void getSalesDetails() {
+        cout << "Enter Total Monthly Sales: ";
+        cin >> totalSales;
+        cout << "Enter Incentive Rate (%): ";
+        cin >> incentiveRate;
+    }
+};
+
+// Derived Class using Multiple Inheritance
+class EmployeePayroll : public EmployeeInfo, public IncentiveInfo {
+public:
+    double calculateIncentive() {
+        return (totalSales * incentiveRate) / 100.0;
+    }
+
+    void displaySalarySlip() {
+        double monthlyIncentive = calculateIncentive();
+        double totalSalary = basicSalary + monthlyIncentive;
+
+        cout << "\n--- Employee Salary Slip ---" << endl;
+        cout << "Employee ID: " << empId << endl;
+        cout << "Employee Name: " << name << endl;
+        cout << "Basic Salary: $" << basicSalary << endl;
+        cout << "Total Sales: $" << totalSales << endl;
+        cout << "Calculated Monthly Incentive: $" << monthlyIncentive << endl;
+        cout << "Total Monthly Salary: $" << totalSalary << endl;
+    }
+};
+
+int main() {
+    EmployeePayroll emp;
+    emp.getBasicDetails();
+    emp.getSalesDetails();
+    emp.displaySalarySlip();
+
+    return 0;
+}
