@@ -1,0 +1,42 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+void testMultipleExceptions(int option) {
+    try {
+        if (option == 1) {
+            throw 404; // Throws an integer exception
+        } else if (option == 2) {
+            throw 'E'; // Throws a character exception
+        } else if (option == 3) {
+            throw string("Custom String Exception Encountered!"); // Throws a string exception
+        } else {
+            cout << "No exception thrown." << endl;
+        }
+    } 
+    catch (int code) {
+        cout << "[Integer Exception Catch Block]: Caught Error Code " << code << endl;
+    } 
+    catch (char ch) {
+        cout << "[Character Exception Catch Block]: Caught Character '" << ch << "'" << endl;
+    } 
+    catch (const string &msg) {
+        cout << "[String Exception Catch Block]: Caught Message - " << msg << endl;
+    }
+}
+
+int main() {
+    cout << "Testing Option 1 (Integer):" << endl;
+    testMultipleExceptions(1);
+
+    cout << "\nTesting Option 2 (Character):" << endl;
+    testMultipleExceptions(2);
+
+    cout << "\nTesting Option 3 (String):" << endl;
+    testMultipleExceptions(3);
+
+    cout << "\nTesting Option 4 (Normal Execution):" << endl;
+    testMultipleExceptions(4);
+
+    return 0;
+}
